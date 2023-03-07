@@ -30,6 +30,7 @@ The player must avoid hitting the snake's own body.
 6. Eat the food to grow longer
 7. Avoid hitting the snake's own body
 8. The game ends when the snake collides with its own body
+9. The speed will increase as your rank rises.
 
 ---
 
