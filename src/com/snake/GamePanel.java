@@ -4,7 +4,33 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GamePanel extends JPanel {
-    //Draw the panel
+    //snake structure
+    int length; //length of snake
+    int[] snakeX = new int[600]; //x coordinate
+    int[] snakeY = new int[500]; //y coordinate
+
+    String fx;
+
+    //default game status
+    boolean isStart = false;
+
+    //constructor
+    public GamePanel() {
+        init();
+    }
+
+    //init the method
+    public void init() {
+        length = 3;
+        //coordinate of head
+        snakeX[0] = 100; snakeY[0] = 100;
+        //coordinate of body
+        snakeX[1] = 75; snakeY[1] = 100;
+        snakeX[2] = 50; snakeY[2] = 100;
+        fx = "R";
+    }
+
+    //draw the panel
     @Override
     protected void paintComponent(Graphics g) {
         //dispose the panel
