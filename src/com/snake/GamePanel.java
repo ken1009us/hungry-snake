@@ -50,6 +50,13 @@ public class GamePanel extends JPanel {
         snakeX[1] = 75; snakeY[1] = 100;
         snakeX[2] = 50; snakeY[2] = 100;
         fx = "R";
+
+        //init the food
+        foodX = 25 + 25 * random.nextInt(34);
+        foodY = 75 + 25 * random.nextInt(24);
+
+        score = 0;
+        rank = 1;
     }
 
     //draw the panel
