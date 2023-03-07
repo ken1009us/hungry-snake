@@ -9,6 +9,10 @@ public class GamePanel extends JPanel {
     protected void paintComponent(Graphics g) {
         //dispose the panel
         super.paintComponent(g);
-        this.setBackground(Color.BLACK);
+        //draw the static panel
+        this.setBackground(Color.darkGray);
+        DataCenter.header.paintIcon(this, g, 25, 11);
+        //default panel
+        g.fillRect(25, 75, 850, 600);
     }
 }
