@@ -10,10 +10,7 @@ public class Main {
         //windows size cannot be changed
         frame.setResizable(false);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-
         frame.add(new GamePanel());
-
         frame.setVisible(true);
     }
 }
