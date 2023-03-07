@@ -70,6 +70,16 @@ public class GamePanel extends JPanel {
         //default panel
         g.fillRect(25, 75, 850, 600);
 
+        //draw the score
+        g.setColor(Color.black);
+        g.setFont(new Font("Jazz LET", Font.BOLD, 20));
+        g.drawString("Rank: " + rank, 650, 30);
+        g.drawString("Length: " + length, 740, 30);
+        g.drawString("Score: " + score, 740, 50);
+
+        //draw the food
+        DataCenter.food.paintIcon(this, g, foodX, foodY);
+
         //draw the snake
         if (fx.equals("R")) {
             DataCenter.right.paintIcon(this, g, snakeX[0], snakeY[0]);
