@@ -1,9 +1,15 @@
 package com.snake;
 
 import javax.swing.*;
+import javax.xml.crypto.Data;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.Random;
 
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements KeyListener, ActionListener {
     //snake structure
     int length; //length of snake
     int[] snakeX = new int[600]; //x coordinate
@@ -93,13 +99,123 @@ public class GamePanel extends JPanel {
 
         for (int i = 1; i < length; i++) {
             DataCenter.body.paintIcon(this, g, snakeX[i], snakeY[i]);
-
         }
 
+        //game status
         if (!isStart) {
             g.setColor(Color.white);
             g.setFont(new Font("Jazz LET", Font.BOLD, 20));
-            g.drawString("Press the space to start the game", 270, 300);
+            g.drawString("Press the space to start the game", 260, 300);
+        }
+
+        if (isFail) {
+            g.setColor(Color.RED);
+            g.setFont(new Font("Jazz LET", Font.BOLD, 20));
+            g.drawString("Failed. Press the space to restart the game", 260, 300);
         }
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (isStart && !isFail) {
+            //eat
+            if (snakeX[0] == foodX && snakeY[0] == foodY) {
+                //grow body
+                length++;
+                //add score
+                score += 10;
+                //add rank
+                rank = score / 50 + 1;
+                if (rank > 1) {
+                    timer.setDelay(100 - rank * 5);
+                }
+                //add food
+                foodX = 25 + 25 * random.nextInt(34);
+                foodY = 75 + 25 * random.nextInt(24);
+            }
+
+            //move
+            for (int i = length - 1; i > 0; i--) {
+                snakeX[i] = snakeX[i-1];
+                snakeY[i] = snakeY[i-1];
+            }
+
+            switch (fx) {
+                case "R" -> {
+                    snakeX[0] = snakeX[0] + 25;
+                    if (snakeX[0] > 850) {
+                        snakeX[0] = 25;
+                    }
+                }
+                case "L" -> {
+                    snakeX[0] = snakeX[0] - 25;
+                    if (snakeX[0] < 25) {
+                        snakeX[0] = 850;
+                    }
+                }
+                case "D" -> {
+                    snakeY[0] = snakeY[0] + 25;
+                    if (snakeY[0] > 650) {
+                        snakeY[0] = 75;
+                    }
+                }
+                case "U" -> {
+                    snakeY[0] = snakeY[0] - 25;
+                    if (snakeY[0] < 75) {
+                        snakeY[0] = 650;
+                    }
+                }
+            }
+
+            //determine if the game is failed
+            for (int i = 1; i < length; i++) {
+                if (snakeX[0]==snakeX[i] && snakeY[0]==snakeY[i]) {
+                    isFail = true;
+                }
+            }
+
+            if (snakeX[0] == snakeX[1] && snakeY[0] == snakeY[1]) {
+                isFail = true;
+            }
+            
+            // repaint the panel
+            repaint();
+        }
+        //start the timer
+        timer.start();
+    }
+
+    //keyboard event listener
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        //Press space to start the game
+        if (keyCode == KeyEvent.VK_SPACE) {
+            if (isFail) {
+                isFail = false;
+                init();
+            } else {
+                isStart = !isStart;
+            }
+            repaint();
+        }
+
+        //move the snake
+        if (keyCode == KeyEvent.VK_UP) {
+            fx = "U";
+        } else if (keyCode == KeyEvent.VK_DOWN) {
+            fx = "D";
+        } else if (keyCode == KeyEvent.VK_LEFT) {
+            fx = "L";
+        } else if (keyCode == KeyEvent.VK_RIGHT) {
+            fx = "R";
+        }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {}
+
+    @Override
+    public void keyReleased(KeyEvent e) {}
+
 }
