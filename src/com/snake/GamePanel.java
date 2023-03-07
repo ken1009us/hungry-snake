@@ -79,6 +79,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
         //draw the score
         g.setColor(Color.black);
         g.setFont(new Font("Jazz LET", Font.BOLD, 20));
+        g.drawString("DEVELOPED BY KEN WU", 36, 36);
         g.drawString("Rank: " + rank, 650, 30);
         g.drawString("Length: " + length, 740, 30);
         g.drawString("Score: " + score, 740, 50);
