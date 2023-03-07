@@ -11,12 +11,34 @@ public class GamePanel extends JPanel {
 
     String fx;
 
+    int foodX;
+    int foodY;
+    Random random = new Random();
+
+    //score
+    int score;
+
+    //rank
+    int rank;
+
     //default game status
     boolean isStart = false;
+
+    //failed status
+    boolean isFail = false;
+
+    //execute the snake each 100 ms
+    Timer timer = new Timer(100, this);
+
 
     //constructor
     public GamePanel() {
         init();
+        //get the keyboard event listener
+        this.setFocusable(true);
+        //get the focus event listener
+        this.addKeyListener(this);
+        timer.start();
     }
 
     //init the method
